@@ -1,0 +1,28 @@
+# Python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.env
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Utility scripts
+fix_classes.py
+theme_refactor.py
+ui_refactor.py
+
+# OS
+.DS_Store
+Thumbs.db
