@@ -45,9 +45,11 @@ def extract_claims_from_abstract(abstract: str, keywords: List[str]) -> List[Dic
             continue
             
         # Scan for causal relationships
+        found_relation = False
         for relation_type, verbs in RELATION_KEYWORDS.items():
             for verb in verbs:
                 if verb in sentence_lower:
+                    found_relation = True
                     # Determine polarity
                     # Simple heuristic: if 'no', 'not', 'fail' appears near the verb, flip polarity
                     polarity = "positive"
@@ -97,5 +99,27 @@ def extract_claims_from_abstract(abstract: str, keywords: List[str]) -> List[Dic
                         "extracted_quote": sentence.strip()
                     })
                     break # Stop looking for verbs once we found one in this sentence
+            if found_relation:
+                break
+                
+        if not found_relation and keywords:
+            # Fallback claim: if they searched a generic term and it's in the sentence, extract a weak associative claim
+            intermediate_terms = ["pathway", "receptor", "cells", "kinase", "enzyme", "protein", "axis", "factor", "signaling", "acid", "expression"]
+            found_intermediate = None
+            for term in intermediate_terms:
+                if term in sentence_lower and term not in [k.lower() for k in keywords]:
+                    found_intermediate = term
+                    break
+            claims.append({
+                "text": f"Found evidence that {keywords[0]} is studied in this context" + (f" via {found_intermediate}" if found_intermediate else ".") ,
+                "claim_type": "associates_with",
+                "polarity": "positive",
+                "confidence": 0.5,
+                "evidence_strength": "weak",
+                "methodology": methodology,
+                "conflict_subtype": None,
+                "intermediate_entity": found_intermediate,
+                "extracted_quote": sentence.strip()
+            })
             
     return claims

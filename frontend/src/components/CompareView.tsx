@@ -22,18 +22,21 @@ export function CompareView() {
     setIsLoading(true);
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-      const [resA, resB] = await Promise.all([
-        fetch(`${API_URL}/query`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: queryA }),
-        }),
-        fetch(`${API_URL}/query`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: queryB }),
-        })
-      ]);
+      
+      const resA = await fetch(`${API_URL}/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: queryA }),
+      });
+      
+      // Add a slight delay to respect PubMed rate limits
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const resB = await fetch(`${API_URL}/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: queryB }),
+      });
 
       if (!resA.ok || !resB.ok) throw new Error("Failed to fetch comparisons");
       
