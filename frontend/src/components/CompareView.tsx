@@ -21,13 +21,14 @@ export function CompareView() {
 
     setIsLoading(true);
     try {
+      const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
       const [resA, resB] = await Promise.all([
-        fetch("http://localhost:8000/query", {
+        fetch(`${API}/query`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: queryA }),
         }),
-        fetch("http://localhost:8000/query", {
+        fetch(`${API}/query`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: queryB }),

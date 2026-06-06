@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
@@ -10,10 +11,12 @@ from logic import detect_contradictions, detect_gaps, synthesize_hypothesis_test
 
 app = FastAPI(title="AxiomGraph API", description="Autonomous Biomedical Evidence Engine")
 
-# CORS for frontend
+# CORS — allow localhost in dev, Vercel URL in prod
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

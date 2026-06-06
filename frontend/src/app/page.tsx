@@ -45,7 +45,8 @@ export default function TelemetryMatrix() {
     setIsLoading(true);
     setActiveView("hub");
     try {
-      const res = await fetch("http://localhost:8000/query", {
+      const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const res = await fetch(`${API}/query`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -67,7 +68,8 @@ export default function TelemetryMatrix() {
   const handleExport = async () => {
     if (!result) return;
     try {
-      const res = await fetch("http://localhost:8000/report", {
+      const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const res = await fetch(`${API}/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -120,7 +122,8 @@ export default function TelemetryMatrix() {
     if (!result || !result.graph || !result.graph.nodes || result.graph.nodes.length === 0) {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:8000/graph/subgraph");
+        const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        const res = await fetch(`${API}/graph/subgraph`);
         const data = await res.json();
         setResult((prev: any) => ({
           top_claims: [],
