@@ -1,0 +1,11 @@
+fastapi==0.128.8
+uvicorn==0.39.0
+sqlmodel==0.0.34
+pydantic==2.13.4
+pydantic-settings==2.11.0
+python-dotenv==1.2.1
+networkx==3.2.1
+requests==2.32.5
+httpx==0.28.1
+SQLAlchemy==2.0.50
+anyio==4.12.1
