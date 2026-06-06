@@ -1,8 +1,0 @@
-# Vercel root config — tells Vercel this is a monorepo with frontend inside /frontend
-{
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/.next",
-  "installCommand": "cd frontend && npm install",
-  "framework": "nextjs",
-  "rootDirectory": "frontend"
-}
