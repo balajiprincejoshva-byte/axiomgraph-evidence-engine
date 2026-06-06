@@ -18,6 +18,12 @@
 </div>
 
 ---
+<div align="center">
+<img width="1280" height="720" alt="Screen Recording 2026-06-06 at 12 01 59 AM(2)" src="https://github.com/user-attachments/assets/4ff2af9c-d83a-4df4-9d1a-e98e46eec726" />
+
+[![To Try KinetiX Demo](https://img.shields.io/badge/Live-Demo-00a393?style=for-the-badge)](https://axiomgraph-evidence-engine-d9yw.vercel.app)
+
+---
 
 ## 🚀 The Paradigm Shift in Tech-Bio
 
@@ -76,3 +82,36 @@ AxiomGraph relies on a decoupled, high-performance architecture to handle comple
 ```bash
 git clone [https://github.com/balajiprincejoshva-byte/axiomgraph-evidence-engine.git](https://github.com/balajiprincejoshva-byte/axiomgraph-evidence-engine.git)
 cd axiomgraph-evidence-engine
+```
+## 🔬 Scientific Methodology & Graph Architecture
+
+AxiomGraph operates on a multi-stage **Graph-RAG (Retrieval-Augmented Generation)** architecture, combining dense vector semantics with strict topological graph traversal to eliminate LLM hallucinations.
+
+### Phase 1: Ingestion & Entity Normalization
+Raw unstructured data (PubMed PDFs, ClinicalTrials.gov XMLs, FDA Adverse Event Reports) is notoriously noisy. AxiomGraph does not just read text; it standardizes it.
+* **Biomedical NER (Named Entity Recognition):** The engine parses documents and isolates key entities (Drugs, Targets, Biomarkers, Phenotypes).
+* **Ontology Mapping:** Entities are mapped against standard biomedical vocabularies (UMLS, MeSH, ChEMBL). If one paper says "Osimertinib" and another says "AZD9291", the engine normalizes them into a single, unified node.
+
+### Phase 2: Causal Edge Extraction
+Standard vector databases only understand *similarity*. AxiomGraph understands *causality*. 
+The LLM orchestration layer extracts directional relationships from the text and writes them to the Graph Database as triad structures: 
+`[Node: Source] → [Edge: Relationship] → [Node: Target]`.
+* *Example:* `[Osimertinib] → inhibits (positive) → [EGFR]`
+* This creates a mathematically traversable network, allowing the system to logically infer that if Drug A inhibits Target B, and Target B causes Disease C, then Drug A treats Disease C.
+
+### Phase 3: The Contradiction & Survival Engine
+When evaluating a hypothesis (e.g., "Drug X extends overall survival in Cohort Y"), the engine traverses the graph to pull all supporting *and* opposing claims. 
+* **Evidence Drift Mapping:** The system plots claims chronologically. It can autonomously detect if early *in vitro* data (high support) was later contradicted by Phase III clinical trials (high opposition).
+* **Survival Pressure Score (0-100):** A proprietary heuristic algorithm that weighs the volume of supporting evidence against the structural fragility of the claims (e.g., heavily penalizing claims that rely solely on outdated mouse models while rewarding recent human trial data).
+
+---
+
+## ⚙️ Systems Topology
+
+AxiomGraph utilizes a decoupled, high-throughput microservice architecture:
+
+* **Inference Layer (Python / FastAPI):** Handles heavy NLP workloads, LLM orchestration (LlamaIndex/LangChain), and builds the NetworkX/Neo4j graph structures in memory.
+* **Vector Store & Graph DB:** Maintains the embeddings for semantic search alongside the structural nodes/edges for rigid logical queries.
+* **Client Telemetry (Next.js / React Flow):** A browser-native interface that renders the causal graph dynamically using physics-based node clustering, ensuring massive biomedical networks remain readable and interactive.
+
+---
